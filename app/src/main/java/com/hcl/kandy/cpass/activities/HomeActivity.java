@@ -26,7 +26,6 @@ public class HomeActivity extends BaseActivity
 
     Fragment callFragment = CallFragment.newInstance();
     Toolbar toolbar;
-    boolean isPasswordGrantLoginType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,6 @@ public class HomeActivity extends BaseActivity
             idToken = extras.getString(LoginActivity.id_token);
             accessToken = extras.getString(LoginActivity.access_token);
             baseUrl = extras.getString(LoginActivity.base_url);
-            isPasswordGrantLoginType = extras.getBoolean(LoginActivity.login_type);
         }
 
         App app = (App) getApplicationContext();

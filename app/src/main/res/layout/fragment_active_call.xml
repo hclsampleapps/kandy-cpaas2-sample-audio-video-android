@@ -66,9 +66,7 @@
     </RelativeLayout>
 
 
-    <include
-        layout="@layout/layout_active_call_actions"
-        android:visibility="gone" />
+
 
     <ImageButton
         android:id="@+id/activeCallHangupButton"

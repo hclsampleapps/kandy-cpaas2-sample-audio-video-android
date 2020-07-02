@@ -27,15 +27,4 @@ public class BaseFragment extends Fragment {
 
     }
 
-
-    public void hideProgressBAr() {
-        if (loading != null && loading.isShowing())
-            loading.dismiss();
-    }
-
-    public void showProgressBar(String message) {
-        if (!TextUtils.isEmpty(message))
-            loading.setMessage(message);
-        loading.show();
-    }
 }

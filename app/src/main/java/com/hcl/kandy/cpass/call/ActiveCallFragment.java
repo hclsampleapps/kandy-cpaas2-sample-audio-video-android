@@ -20,11 +20,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +33,6 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.rbbn.cpaas.mobile.call.api.CallInterface;
 import com.rbbn.cpaas.mobile.call.api.CallService;
 import com.rbbn.cpaas.mobile.call.api.CallState;
-import com.rbbn.cpaas.mobile.call.api.MediaAttributes;
 import com.rbbn.cpaas.mobile.core.webrtc.view.VideoView;
 
 import java.util.ArrayList;
@@ -65,20 +62,14 @@ public class ActiveCallFragment extends Fragment implements CPaaSCallFragment {
     private int iconColor = Color.WHITE;
 
     private ImageButton hangupButton;
-    private ImageButton muteButton, videoOnOffButton, holdButton, toggleCamera, keypadButton, makeOtherEventsVisible, makePreviousEventsVisible, cameraOptionsButton, audioDeviceToggle;
-    private TextView callDurationTextView, activeCallerName, muteButtonLabel, holdButtonLabel, audioDeviceToggleLabel;
-    private View activeButtonGroup, callControlButtonGroup, topLevelLayout;
+    private TextView callDurationTextView, activeCallerName;
+    private View  topLevelLayout;
     private OnActiveCallActionChangeListener mListener;
     private ProgressDialog callProgressDialog;
 
     // Dialpad views
-    private Button closeKeypadButton;
-    private TableLayout keyPadView;
-    private EditText dialPadEditText;
     private MediaPlayer mp;
     private int[] sounds = {R.raw.dtmf0, R.raw.dtmf1, R.raw.dtmf2, R.raw.dtmf3, R.raw.dtmf4, R.raw.dtmf5, R.raw.dtmf6, R.raw.dtmf7, R.raw.dtmf8, R.raw.dtmf9, R.raw.dtmfroot, R.raw.dtmfstar};
-    private Button buttonDTMF0, buttonDTMF1, buttonDTMF2, buttonDTMF3, buttonDTMF4, buttonDTMF5, buttonDTMF6, buttonDTMF7, buttonDTMF8, buttonDTMF9, buttonDTMFRroot, buttonDTMFSstar;
-
     public ActiveCallFragment() {
     }
 
@@ -210,10 +201,6 @@ public class ActiveCallFragment extends Fragment implements CPaaSCallFragment {
         mp = MediaPlayer.create(getContext(), sounds[padPosition]);
         mp.setLooping(true);
         mp.start();
-
-        if (padPosition == 10) dialPadEditText.append("#");
-        else if (padPosition == 11) dialPadEditText.append("*");
-        else dialPadEditText.append("" + padPosition);
     }
 
     @Override
@@ -225,41 +212,6 @@ public class ActiveCallFragment extends Fragment implements CPaaSCallFragment {
         hangupButton.setImageDrawable(new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_call_end).color(Color.RED).sizeDp(48));
         activeCallerName = getActivity().findViewById(R.id.activeCallCallerName);
         callDurationTextView = getActivity().findViewById(R.id.callDurationText);
-        View secondButtonGroupLayout = getActivity().findViewById(R.id.second_event_group);
-        // When the activity first created default call buttons should shown and second group must be invisible
-        secondButtonGroupLayout.setVisibility(View.INVISIBLE);
-        keyPadView = getActivity().findViewById(R.id.keyPadView);
-        keyPadView.setVisibility(View.INVISIBLE);
-        activeButtonGroup = getActivity().findViewById(R.id.first_event_group);
-        muteButton = getActivity().findViewById(R.id.muteButton);
-        muteButtonLabel = getActivity().findViewById(R.id.muteButtonLabel);
-        videoOnOffButton = getActivity().findViewById(R.id.cameraToggleButton);
-        toggleCamera = getActivity().findViewById(R.id.rotateCameraButton);
-        holdButton = getActivity().findViewById(R.id.holdButton);
-        holdButtonLabel = getActivity().findViewById(R.id.holdButtonLabel);
-        keypadButton = getActivity().findViewById(R.id.keypadButton);
-        makeOtherEventsVisible = getActivity().findViewById(R.id.makeOtherEventsVisible);
-        makePreviousEventsVisible = getActivity().findViewById(R.id.makePreviousEventsVisible);
-        callControlButtonGroup = getActivity().findViewById(R.id.call_control_view);
-        closeKeypadButton = getActivity().findViewById(R.id.closeDialpad);
-        dialPadEditText = getActivity().findViewById(R.id.dialPadTextView);
-        cameraOptionsButton = getActivity().findViewById(R.id.cameraOptions);
-        audioDeviceToggle = getActivity().findViewById(R.id.audioDeviceToggle);
-        audioDeviceToggleLabel = getActivity().findViewById(R.id.audioDeviceToggleLabel);
-
-        //DTMF buttons
-        buttonDTMF0 = getActivity().findViewById(R.id.pad0);
-        buttonDTMF1 = getActivity().findViewById(R.id.pad1);
-        buttonDTMF2 = getActivity().findViewById(R.id.pad2);
-        buttonDTMF3 = getActivity().findViewById(R.id.pad3);
-        buttonDTMF4 = getActivity().findViewById(R.id.pad4);
-        buttonDTMF5 = getActivity().findViewById(R.id.pad5);
-        buttonDTMF6 = getActivity().findViewById(R.id.pad6);
-        buttonDTMF7 = getActivity().findViewById(R.id.pad7);
-        buttonDTMF8 = getActivity().findViewById(R.id.pad8);
-        buttonDTMF9 = getActivity().findViewById(R.id.pad9);
-        buttonDTMFRroot = getActivity().findViewById(R.id.padRoot);
-        buttonDTMFSstar = getActivity().findViewById(R.id.padStar);
 
         activeCallerName.setText(getCallerNameString());
 
@@ -342,199 +294,12 @@ public class ActiveCallFragment extends Fragment implements CPaaSCallFragment {
         hangupButton.setOnClickListener(v -> publishOutgoingCallActionChange(ActiveCallState.HANGUP));
 //        callControlButtonGroup.setOnClickListener(v -> hideShowControls());
         topLevelLayout.setOnClickListener(v -> hideShowControls());
-        activeButtonGroup.setOnClickListener(v -> setMenuIcons());
-        muteButton.setOnClickListener(v -> toogleMute());
-        videoOnOffButton.setOnClickListener(v -> toggleVideo());
-
-        holdButton.setOnClickListener(v -> toggleHold());
-        keypadButton.setOnClickListener(v -> toggleDTMFView());
-        closeKeypadButton.setOnClickListener(v -> toggleDTMFView());
-        toggleCamera.setOnClickListener(v -> toggleCamera());
-        cameraOptionsButton.setOnClickListener(v -> switchCam());
-        audioDeviceToggle.setOnClickListener(v -> toggleAudioDevice());
-        makeOtherEventsVisible.setOnClickListener(v -> changeVisibilityOfButtonGroups());
-        makePreviousEventsVisible.setOnClickListener(v -> changeVisibilityOfButtonGroups());
-
-        setDtmfTouchListeners();
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private void setDtmfTouchListeners() {
-        buttonDTMF0.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    playDTMFSound(0);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopDTMFSoundAndSendDtmf(0);
-                }
-                return false;
-            }
-
-        });
-        buttonDTMF1.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    playDTMFSound(1);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopDTMFSoundAndSendDtmf(1);
-                }
-                return false;
-            }
-
-        });
-        buttonDTMF2.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    playDTMFSound(2);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopDTMFSoundAndSendDtmf(2);
-                }
-                return false;
-            }
-
-        });
-        buttonDTMF3.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    playDTMFSound(3);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopDTMFSoundAndSendDtmf(3);
-                }
-                return false;
-            }
-
-        });
-        buttonDTMF4.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    playDTMFSound(4);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopDTMFSoundAndSendDtmf(3);
-                }
-                return false;
-            }
-
-        });
-        buttonDTMF5.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    playDTMFSound(5);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopDTMFSoundAndSendDtmf(5);
-                }
-                return false;
-            }
-
-        });
-        buttonDTMF6.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    playDTMFSound(6);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopDTMFSoundAndSendDtmf(6);
-                }
-                return false;
-            }
-
-        });
-
-        buttonDTMF7.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    playDTMFSound(7);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopDTMFSoundAndSendDtmf(7);
-                }
-                return false;
-            }
-
-        });
-        buttonDTMF8.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    playDTMFSound(8);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopDTMFSoundAndSendDtmf(8);
-                }
-                return false;
-            }
-
-        });
-        buttonDTMF9.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    playDTMFSound(9);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopDTMFSoundAndSendDtmf(9);
-                }
-                return false;
-            }
-
-        });
-        buttonDTMFRroot.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    playDTMFSound(10);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopDTMFSoundAndSendDtmf(10);
-                }
-                return false;
-            }
-        });
-        buttonDTMFSstar.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    playDTMFSound(11);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopDTMFSoundAndSendDtmf(11);
-                }
-                return false;
-            }
-        });
     }
 
     private void setAudioRoute() {
         if (!userSelectedAnAudioMode && getActiveCall() != null && getActiveCall().getMediaAttributes().getLocalVideo()) {
             enableSpeakerMode();
             Log.d(TAG, "setAudioRoute: local video is enabled so enabling speaker mode by default");
-        }
-    }
-
-    private void toggleAudioDevice() {
-        if (speakerModeEnabled) {
-            enableEarpieceMode();
-            Log.d(TAG, "toggleAudioDevice: switching from speaker to earpiece");
-            Toast.makeText(getContext(), "switching from speaker to earpiece", Toast.LENGTH_SHORT).show();
-        } else {
-            enableSpeakerMode();
-            Log.d(TAG, "toggleAudioDevice: switching from earpiece to speaker");
-            Toast.makeText(getContext(), "switching from earpiece to speaker", Toast.LENGTH_SHORT).show();
-        }
-        userSelectedAnAudioMode = true;
-    }
-
-    private void enableEarpieceMode() {
-        AudioManager audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-        if (audioManager != null) {
-            Log.d(TAG, "enableEarpiece: routing audio to earpiece");
-            audioManager.setMode(AudioManager.STREAM_VOICE_CALL);
-            audioManager.setSpeakerphoneOn(false);
-            speakerModeEnabled = false;
-            setMenuIcons();
-        } else {
-            Log.e(TAG, "enableEarpiece: Audio manager is not available");
         }
     }
 
@@ -607,33 +372,6 @@ public class ActiveCallFragment extends Fragment implements CPaaSCallFragment {
     public void setMenuIcons() {
         if (getActiveCall() != null) {
             Log.d(TAG, "setMenuIcons: setting it");
-            MediaAttributes state = getActiveCall().getMediaAttributes();
-
-            muteButton.setImageDrawable(new IconicsDrawable(getContext()).icon(getActiveCall().isMute()
-                    ? GoogleMaterial.Icon.gmd_mic : GoogleMaterial.Icon.gmd_mic_off).color(iconColor).sizeDp(iconSize));
-            muteButtonLabel.setText(getActiveCall().isMute() ? "Unmute" : "Mute");
-            videoOnOffButton.setImageDrawable(new IconicsDrawable(getContext()).icon(state.getLocalVideo()
-                    ? GoogleMaterial.Icon.gmd_videocam_off : GoogleMaterial.Icon.gmd_videocam).color(iconColor).sizeDp(iconSize));
-            toggleCamera.setImageDrawable(new IconicsDrawable(getContext()).icon(getActiveCall().getActiveCamera() == Camera.CameraInfo.CAMERA_FACING_BACK
-                    ? GoogleMaterial.Icon.gmd_camera_rear : GoogleMaterial.Icon.gmd_camera_front).color(iconColor).sizeDp(iconSize));
-            keypadButton.setImageDrawable(new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_dialpad).color(iconColor).sizeDp(iconSize));
-            makeOtherEventsVisible.setImageDrawable(new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_loop).color(iconColor).sizeDp(iconSize));
-            cameraOptionsButton.setImageDrawable(new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_camera_roll).color(iconColor).sizeDp(iconSize));
-            audioDeviceToggle.setImageDrawable(new IconicsDrawable(getContext()).icon(speakerModeEnabled
-                    ? GoogleMaterial.Icon.gmd_speaker : GoogleMaterial.Icon.gmd_hearing).color(iconColor).sizeDp(iconSize));
-            audioDeviceToggleLabel.setText(speakerModeEnabled ? "Speaker" : "Earpiece");
-            makePreviousEventsVisible.setImageDrawable(new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_loop).color(iconColor).sizeDp(iconSize));
-
-            if ((getActiveCall().getCallState().getType() == CallState.Type.ON_HOLD
-                    || getActiveCall().getCallState().getType() == CallState.Type.ON_DOUBLE_HOLD)) {
-                holdButton.setImageDrawable(
-                        new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_play_arrow).color(iconColor).sizeDp(iconSize));
-                holdButtonLabel.setText("Unhold");
-            } else if (getActiveCall() != null) {
-                holdButton.setImageDrawable(
-                        new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_pause).color(iconColor).sizeDp(iconSize));
-                holdButtonLabel.setText("Hold");
-            }
         } else {
             Log.e(TAG, "setMenuIcons: Not setting it ");
         }
@@ -683,63 +421,6 @@ public class ActiveCallFragment extends Fragment implements CPaaSCallFragment {
         super.onDetach();
         mListener = null;
         if (durationCounter != null) durationCounter.cancel();
-    }
-
-    public void changeVisibilityOfButtonGroups() {
-        View defaultButtonGroup = getActivity().findViewById(R.id.first_event_group);
-        View secondButtonGroup = getActivity().findViewById(R.id.second_event_group);
-        if (defaultButtonGroup.getVisibility() == View.VISIBLE) {
-            defaultButtonGroup.setVisibility(View.INVISIBLE);
-            secondButtonGroup.setVisibility(View.VISIBLE);
-            activeButtonGroup = secondButtonGroup;
-        } else {
-            defaultButtonGroup.setVisibility(View.VISIBLE);
-            secondButtonGroup.setVisibility(View.INVISIBLE);
-            activeButtonGroup = defaultButtonGroup;
-        }
-    }
-
-    public void toogleMute() {
-        if (getActiveCall() != null && getActiveCall().isMute()) {
-            Log.d(TAG, "toogleMute: unmuting");
-            getActiveCall().unMute();
-            setMenuIcons();
-        } else if (getActiveCall() != null) {
-            Log.d(TAG, "toogleMute: muting");
-            getActiveCall().mute();
-            setMenuIcons();
-        }
-    }
-
-    public void toggleVideo() {
-        if (getActiveCall() != null) {
-            if (getActiveCall().getMediaAttributes().getLocalVideo()) {
-                Log.d(TAG, "toggleVideo: stopping");
-                getActiveCall().videoStop();
-            } else {
-                Log.d(TAG, "toggleVideo: starting");
-                getActiveCall().videoStart();
-            }
-        } else {
-            Toast.makeText(getContext(), "Call cannot send video", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    public void toggleHold() {
-        if (getActiveCall() != null) {
-            if (getActiveCall().getCallState().getType() == CallState.Type.ON_DOUBLE_HOLD ||
-                    getActiveCall().getCallState().getType() == CallState.Type.ON_HOLD) {
-                Log.d(TAG, "togglehold: unholding");
-                getActiveCall().unHoldCall();
-                showCallProgressDialog("Unholding...");
-            } else {
-                Log.d(TAG, "togglehold: holding");
-                getActiveCall().holdCall();
-                showCallProgressDialog("Holding...");
-            }
-        }
-
     }
 
     private void showCallProgressDialog(String message) {

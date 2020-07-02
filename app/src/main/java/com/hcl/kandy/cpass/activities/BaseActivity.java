@@ -36,8 +36,4 @@ public class BaseActivity extends AppCompatActivity {
         loading.show();
     }
 
-    public void showMessage(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
-    }
-
 }

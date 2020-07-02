@@ -8,7 +8,5 @@ public enum ActiveCallState implements CallState {
     MAKE_VIDEO_CALL,
     MAKE_AUDIO_CALL,
     ERROR,
-    REMOTELY_HELD,
-    ON_DOUBLE_HOLD,
     NOT_EXIST
 }

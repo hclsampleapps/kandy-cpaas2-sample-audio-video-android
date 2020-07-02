@@ -167,10 +167,6 @@ public class IncomingCallFragment extends Fragment implements CPaaSCallFragment 
         publishIncomingCallActionChange(IncomingCallState.REJECT);
     }
 
-    private void ignoreCall() {
-        publishIncomingCallActionChange(IncomingCallState.IGNORE);
-    }
-
     @Override
     public void callStateChanged(CallState.Type state) {
 
