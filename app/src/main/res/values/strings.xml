@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Kandy Cpass 2.0</string>
+    <string name="enter_user_name">User name</string>
+    <string name="enter_user_password">User password</string>
+    <string name="enter_user_client">User client</string>
+    <string name="login">Login</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="loading">Loading data...</string>
+    <string name="enter_url">Base url</string>
+    <string name="foreground_call_service_content_text">Call</string>
+    <string name="common_message_permission_all_required">Storage permission needed. Please allow in App Settings for login.</string>
+
+    <string name="enter_private_project_key">Enter Private Project key</string>
+    <string name="enter_private_project_secret">Enter Private Project secret</string>
+
+</resources>

@@ -1,0 +1,18 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+
+    <dimen name="menu_button_margin">1dp</dimen>
+    <dimen name="menu_button_w">75dp</dimen>
+    <dimen name="local_video_width">90dp</dimen>
+    <dimen name="local_video_height">120dp</dimen>
+    <dimen name="dialpad_number_text_size">10sp</dimen>
+    <dimen name="dialpad_button_margin">4dp</dimen>
+    <dimen name="active_call_action_label_text_size">12sp</dimen>
+    <dimen name="active_call_label_text_margin_top">4dp</dimen>
+    <dimen name="active_call_item_layout_margin">4dp</dimen>
+
+</resources>

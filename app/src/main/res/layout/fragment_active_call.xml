@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/active_call_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_dark">
+
+    <TextView
+        android:id="@+id/activeCallCallerName"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:maxLines="2"
+        android:text="user@cpaas.dev.demo.com"
+        android:textColor="@android:color/white" />
+
+    <LinearLayout
+        android:id="@+id/activeCallStateInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activeCallCallerName"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/activeCallStateText"
+            style="@android:style/TextAppearance.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Dialing"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/callDurationText"
+            style="@android:style/TextAppearance.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/activeCallStateInfo"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/activeCallStateInfo"
+        android:orientation="horizontal">
+
+        <com.rbbn.cpaas.mobile.core.webrtc.view.VideoView
+            android:id="@+id/remoteVideoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.rbbn.cpaas.mobile.core.webrtc.view.VideoView
+            android:id="@+id/localVideoView"
+            android:layout_width="@dimen/local_video_width"
+            android:layout_height="@dimen/local_video_height"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp" />
+    </RelativeLayout>
+
+
+    <include
+        layout="@layout/layout_active_call_actions"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@+id/activeCallHangupButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_margin="32dp"
+        android:background="@null"
+        android:text="Hangup" />
+</RelativeLayout>
