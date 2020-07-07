@@ -7,8 +7,8 @@ android {
         applicationId "com.hcl.kandy.cpass"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 7
-        versionName "1.1.6"
+        versionCode 1
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
