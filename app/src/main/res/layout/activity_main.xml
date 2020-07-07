@@ -71,7 +71,6 @@
                     android:id="@+id/et_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="nesonukuv@planet-travel.club"
                     android:hint="abcd@xyz.com" />
 
                 <TextView
@@ -85,7 +84,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Test@123"
-                    android:text="Test@123"
                     android:inputType="textPassword" />
 
                 <TextView
@@ -97,7 +95,6 @@
                 <EditText
                     android:id="@+id/et_user_client"
                     android:layout_width="match_parent"
-                    android:text="PUB-nesonukuv.34mv"
                     android:layout_height="wrap_content"
                     android:hint="PUB-test123" />
 
