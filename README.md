@@ -44,7 +44,7 @@ Fork the repository. Then, run:
 
 ```
 git clone --recursive git@github.com:<username>/gitflow.git
-cd kandy-cpaas2-sample-android
+cd kandy-cpaas2-sample-audio-video-android
 git branch master origin/master
 git flow init -d
 git checkout develop
