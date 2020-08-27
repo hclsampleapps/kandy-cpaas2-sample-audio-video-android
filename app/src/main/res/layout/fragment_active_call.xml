@@ -65,9 +65,6 @@
             android:layout_margin="8dp" />
     </RelativeLayout>
 
-
-
-
     <ImageButton
         android:id="@+id/activeCallHangupButton"
         android:layout_width="wrap_content"

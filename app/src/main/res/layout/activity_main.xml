@@ -28,9 +28,7 @@
                 android:id="@+id/et_url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:hint="nvs-cpaas-oauth.kandy.io"
-                android:text="oauth-cpaas.att.com" />
+                android:hint="baseurl.domain.com" />
 
             <RadioGroup
                 android:id="@+id/rg_login_type_selection"
@@ -71,7 +69,7 @@
                     android:id="@+id/et_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="abcd@xyz.com" />
+                    android:hint="user1@domain.com" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -83,7 +81,7 @@
                     android:id="@+id/et_user_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="ABCDEF123"
+                    android:hint="Test@123"
                     android:inputType="textPassword" />
 
                 <TextView
@@ -96,7 +94,7 @@
                     android:id="@+id/et_user_client"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="PUB-test123" />
+                    android:hint="PUB-project.name" />
 
             </LinearLayout>
 
@@ -117,7 +115,7 @@
                     android:id="@+id/et_client_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="PRIV-abcdef.12ab.abcdefg1" />
+                    android:hint="b013f26f-329a-4156-a01c-38263505f965" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -129,7 +127,8 @@
                     android:id="@+id/et_client_secret"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:hint="b013f26f-329a-4156-a01c-38263505f965"/>
 
 
             </LinearLayout>
