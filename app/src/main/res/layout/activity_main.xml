@@ -83,7 +83,7 @@
                     android:id="@+id/et_user_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Test@123"
+                    android:hint="ABCDEF123"
                     android:inputType="textPassword" />
 
                 <TextView
@@ -117,7 +117,7 @@
                     android:id="@+id/et_client_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="PRIV-nesonukuv.34mv.nesopro1" />
+                    android:hint="PRIV-abcdef.12ab.abcdefg1" />
 
                 <TextView
                     android:layout_width="match_parent"
