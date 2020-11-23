@@ -115,7 +115,7 @@
                     android:id="@+id/et_client_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="b013f26f-329a-4156-a01c-38263505f965" />
+                    android:hint="abcd123-12a1-1a12-1234-123a45678b9c" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -128,8 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:hint="b013f26f-329a-4156-a01c-38263505f965"/>
-
+                    android:hint="abcd123-12a1-1a12-1234-123a45678b9c" />
 
             </LinearLayout>
 
