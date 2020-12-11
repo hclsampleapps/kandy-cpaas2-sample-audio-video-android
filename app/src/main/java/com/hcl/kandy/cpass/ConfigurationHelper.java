@@ -9,13 +9,12 @@ public class ConfigurationHelper {
 
     public static void setConfigurations(String baseUrl) {
         Configuration configuration = Configuration.getInstance();
-        configuration.setDTLS(true);
         configuration.setIceOption(ICEOptions.ICE_VANILLA);
         configuration.setICECollectionTimeout(12);
-        setPreferedCodecs(baseUrl);
+        setPreferedCodecs();
     }
 
-    private static void setPreferedCodecs(String baseUrl) {
+    private static void setPreferedCodecs() {
 
         Configuration configuration = Configuration.getInstance();
         ICEServers iceServers = new ICEServers();
@@ -26,8 +25,6 @@ public class ConfigurationHelper {
         configuration.setICEServers(iceServers);
 
         CodecSet codecSet = new CodecSet();
-        // codecSet.audioCodecs = new CodecSet.AudioCodecType[]{CodecSet.AudioCodecType.AC_G722, CodecSet.AudioCodecType.AC_OPUS};
-        // codecSet.videoCodecs = new CodecSet.VideoCodecType[]{CodecSet.VideoCodecType.VC_H264, CodecSet.VideoCodecType.VC_VP9};
         configuration.setPreferredCodecSet(codecSet);
     }
 }

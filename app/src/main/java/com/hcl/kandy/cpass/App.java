@@ -40,7 +40,6 @@ public class App extends Application {
     public void setCpass(String baseUrl, String mAccessToken, String idToken, HomeActivity.CpassListner cpassListner) {
         Context context = getApplicationContext();
 
-        Configuration.getInstance().setUseSecureConnection(true);
         Configuration.getInstance().setRestServerUrl(baseUrl);
         Configuration.getInstance().setLogLevel(LogLevel.TRACE);
         ConfigurationHelper.setConfigurations(baseUrl);
