@@ -24,7 +24,7 @@ public class ConfigurationHelper {
         iceServers.addICEServer("stun:turn-ucc-2.genband.com:3478?transport=udp");
         configuration.setICEServers(iceServers);
 
-        CodecSet codecSet = new CodecSet();
-        configuration.setPreferredCodecSet(codecSet);
+//        CodecSet codecSet = new CodecSet();
+//        configuration.setPreferredCodecSet(codecSet);
     }
 }
